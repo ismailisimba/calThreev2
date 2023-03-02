@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="This site is home to Ismaili's creative portfolio and other cool stuff.">
+    
+    
+   <link href="./style.css" type="text/css" rel="stylesheet">
+   
+    
+   <title>Ismizo - Calculator Three</title>
+
+  </head>
+  <body>
+   
+    
+
+    <section class="calculatorthreecontainer">
+        <div>
+            <label for="name">Name :</label>
+            <input type="text" id="name" name="name"
+            value="Enter Name Here" placeholder="Enter Name Here">
+        </div>
+        <div>
+            <label for="age">Date of Birth :</label>
+            <div class="date" id="date" style="width: 50% !important;">
+                <input type="number" id="day" name="day" max="31" min="1" step="1" value="" style="width: auto !important; max-width: 52px; font-size: 12px; text-align: center;">
+                <input type="number" id="month" name="month" max="12" min="01" step="1" value="" style="width: auto !important; max-width: 52px; font-size: 12px; text-align: center;">
+                <input type="number" id="year" name="year" max="2999" min="1900" step="1" value="" style="width: auto !important; max-width: 52px; font-size: 12px; text-align: center;">
+            </div>
+        </div>
+        <div>
+            <label for="plan-select">Plan :</label>
+
+            <select name="plans" id="plan-select">
+                <option value="def">--Please choose a plan--</option>
+                <option value="Life Plus Plan - With Cash Backs">Life Plus Plan - With Cash Backs</option>
+                <option value="Life Plus Plan - No Cash Backs">Life Plus Plan - No Cash Backs</option>
+                <option value="Life Plan - With Cash Backs">Life Plan - With Cash Backs</option>
+                <option value="Life Plan - No Cash Backs">Life Plan - No Cash Backs</option>
+                <option value="Education Plan - With Cash Backs">Education Plan - With Cash Backs</option>
+                <option value="Education Plan - No Cash Backs">Education Plan - No Cash Backs</option>
+            </select>
+        </div>
+        <div>
+            <label for="plan-select">Sum Assured :</label>
+
+            <select name="sums" id="sum-select">
+                <option value="def">--Please choose a sum--</option>
+                <option value="5m">5,000,000</option>
+                <option value="7.5m">7,500,000</option>
+                <option value="10m">10,000,000</option>
+                <option value="12.5m">12,500,000</option>
+                <option value="15m">15,000,000</option>
+                <option value="17.5m">17,500,000</option>
+                <option value="20m">20,000,000</option>
+            </select>
+        </div>
+        <div>
+            <label for="term">Term :</label>
+            <select name="terms" id="term-select">
+                <option value="def"> *Please choose a sum first.* </option>
+            </select>
+        </div>
+        <div class="button">
+            <button name="getPrem" id="getPrem"> Get premium price.</button>
+        </div>
+        <div class="premiumprice">
+           
+        </div>
+        <div class="loadanime" id="loadanime"><span id="spOne" class="dots"></span><span id="spTwo" class="dots"></span><span id="spThree" class="dots"></span></div>
+        <div id="customalert"><span id="closebutton_calThree211810">X</span></div>
+    </section>
+    
+
+
+<script src="./script.js"></script>
+
+  </body>
+</html>
