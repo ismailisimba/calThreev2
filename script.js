@@ -325,18 +325,19 @@ function addDateEventListeners(){
 async function getPDF(obj){
     startAnimation();
     const pdfObj = {};
+    console.log(typeof obj.planSelected !== 'undefined')
     pdfObj.name = obj.name;
     pdfObj.dayOfBirth = `${document.getElementById("year").value}-${document.getElementById("month").value}-${document.getElementById("day").value}`;
     pdfObj.age = obj.age;
     pdfObj.cashbackStatus = obj.newObj.cashBackVal==="cashBackVal"?"No Cashbacks":"With Cashbacks";
-    pdfObj.planType = obj.planSelected==undefined?" - ":obj.planSelected;
-    pdfObj.policyTerm = obj.termSelected==undefined?" - ":obj.termSelected;
-    pdfObj.sumInsured = obj.sumAss==undefined?" - ":obj.sumAss;
-    pdfObj.premium = obj.premium ==undefined?" - ":obj.premium;
-    pdfObj.totalpremium = obj.premTot==undefined?" - ":obj.premTot;
-    pdfObj.revbonus = obj.revBonus==undefined?" - ":obj.revBonus;
-    pdfObj.termbonus = obj.termBonus==undefined?" - ":obj.termBonus;
-    pdfObj.totalmatval = obj.fullMaturity ==undefined?" - ":obj.fullMaturity;
+    pdfObj.planType = typeof obj.planSelected !== 'undefined'?obj.planSelected:" - ";
+    pdfObj.policyTerm = typeof obj.termSelected !== 'undefined'?obj.termSelected:" - ";
+    pdfObj.sumInsured = typeof obj.newObj.sumAss !== 'undefined'?obj.newObj.sumAss:" - ";
+    pdfObj.premium = typeof obj.premium !== 'undefined'?obj.premium:" - ";
+    pdfObj.totalpremium = typeof obj.newObj.premTot !== 'undefined'?obj.newObj.premTot:" - ";
+    pdfObj.revbonus = typeof obj.newObj.revBonus !== 'undefined'?obj.newObj.revBonus:" - ";
+    pdfObj.termbonus = typeof obj.newObj.termBonus !== 'undefined'?obj.newObj.termBonus:" - ";
+    pdfObj.totalmatval = typeof obj.newObj.fullMaturity !== 'undefined'?obj.newObj.fullMaturity:" - ";
     pdfObj.cashback = obj.newObj.cashBackVal==="cashBackVal"?"- ":obj.newObj.cashBackVal;
     fetchInfoWithFilter2(JSON.stringify(pdfObj),"alliancepdf").then((e)=>{
         stopAnimation();
