@@ -1,4 +1,5 @@
 const server = "https://script.google.com/macros/s/AKfycbxAb_rCj1VVL_gNLrCaP8oXIsFUL-BOGLuXvxH9WudHZ8q1p0fS-MR6gMEquaGQYmeM/exec";
+const serverToo = "https://script.google.com/macros/s/AKfycbyiGcPBw3klm_vHQR034Mkahd6iZYVYMIVbsMzTnbXtO1Mj25itH2GBfk3i0EQ6OD8n/exec";
 const butt = document.getElementById("getPrem");
 const sumEle = document.getElementById("sum-select");
 let publicDateVar = 0;
@@ -212,6 +213,7 @@ async function fetchInfoWithFilter (data,para) {
 
   function showPremium(obj){
       stopAnimation().then(()=>{
+        getPDF(obj); 
           if(obj.premium==="tooyoung"){
                // alert("you have to be at least 18 years old!");
                 showCustomPopUp("you have to be at least 18 years old!");
@@ -240,7 +242,10 @@ async function fetchInfoWithFilter (data,para) {
             Full Maturity Value is ${obj.newObj.fullMaturity} Tshs.<br><br>`
           }
         
+         
       });
+
+      startAnimation();
      
 
   };
@@ -315,3 +320,83 @@ function addDateEventListeners(){
         }
     })
 }
+
+
+async function getPDF(obj){
+    startAnimation();
+    const pdfObj = {};
+    pdfObj.name = obj.name;
+    pdfObj.dayOfBirth = `${document.getElementById("year").value}-${document.getElementById("month").value}-${document.getElementById("day").value}`;
+    pdfObj.age = obj.age;
+    pdfObj.cashbackStatus = obj.newObj.cashBackVal==="cashBackVal"?"No Cashbacks":"With Cashbacks";
+    pdfObj.planType = obj.planSelected||" - ";
+    pdfObj.policyTerm = obj.termSelected||" - ";
+    pdfObj.sumInsured = obj.sumAss||" - ";
+    pdfObj.premium = obj.premium ||" - ";
+    pdfObj.totalpremium = obj.premTot||" - ";
+    pdfObj.revbonus = obj.revBonus||" - ";
+    pdfObj.termbonus = obj.termBonus||" - ";
+    pdfObj.totalmatval = obj.fullMaturity ||" - ";
+    pdfObj.cashback = obj.newObj.cashBackVal==="cashBackVal"?"- ":obj.newObj.cashBackVal;
+    fetchInfoWithFilter2(JSON.stringify(pdfObj),"alliancepdf").then((e)=>{
+        stopAnimation();
+        const file = JSON.parse(e);
+        console.log(file);
+        const linkSource = `data:application/pdf;base64,${file.file}`;
+        const downloadLink = document.getElementById("downloadPdf").parentNode;
+        downloadLink.href = linkSource;
+        downloadLink.download = file.fileName;
+        document.getElementById("downloadPdf").style.visibility = "visible";
+    })
+}
+
+
+async function fetchInfoWithFilter2 (data,para) {
+
+    data = JSON.stringify(data);
+      
+  
+    var myRequest = new Request(serverToo+"?paraOne="+para);
+    
+  
+         
+    const returnVal = await fetch(myRequest, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'omit', // include, *same-origin, omit
+      headers: {
+        //'Content-Type': 'text/txt'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: data // body data type must match "Content-Type" header
+    })
+          .then(function(response) {
+            if (!response.ok) {
+              
+              throw new Error("HTTP error, status = " + response.status);
+              
+            }
+            
+            return response.text();
+          })
+          .then(function(myBlob) {
+            
+            var cloudObject = myBlob;
+            
+          
+            return cloudObject;
+            
+          })
+          .catch(function(error) {
+           console.log(error.message)
+          });
+  
+        
+         // document.querySelectorAll(".mycolumns")[1].innerHTML = returnVal;
+          return returnVal; 
+  
+      // tempDiv.innerHTML = Object.entries(localVar.values)[0][1][3] ;   
+  };
