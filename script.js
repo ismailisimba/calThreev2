@@ -327,7 +327,7 @@ async function getPDF(obj){
     const pdfObj = {};
     console.log(typeof obj.planSelected !== 'undefined')
     pdfObj.name = obj.name;
-    pdfObj.dayOfBirth = `${document.getElementById("year").value}-${document.getElementById("month").value}-${document.getElementById("day").value}`;
+    pdfObj.dayOfBirth = `${document.getElementById("day").value}-${document.getElementById("month").value}-${document.getElementById("year").value}`;
     pdfObj.age = obj.age;
     pdfObj.cashbackStatus = obj.newObj.cashBackVal==="cashBackVal"?"No Cashbacks":"With Cashbacks";
     pdfObj.planType = typeof obj.planSelected !== 'undefined'?obj.planSelected:" - ";
@@ -343,10 +343,10 @@ async function getPDF(obj){
         stopAnimation();
         const file = JSON.parse(e);
         console.log(file);
-        const linkSource = `data:application/pdf;base64,${file.file}`;
+        const linkSource = JSON.parse(file.file).url;
         const downloadLink = document.getElementById("downloadPdf").parentNode;
         downloadLink.href = linkSource;
-        downloadLink.download = file.fileName;
+        downloadLink.setAttribute("target","_blank")
         document.getElementById("downloadPdf").style.visibility = "visible";
     })
 }
