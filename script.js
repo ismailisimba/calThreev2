@@ -221,6 +221,7 @@ async function fetchInfoWithFilter (data,para) {
            // alert("you have to be less than 60 years old!");
             showCustomPopUp("you have to be less than 60 years old!")
           }else if(obj.planSelected==="Life Plus Plan - No Cash Backs"||obj.planSelected==="Life Plus Plan - With Cash Backs"){
+            obj.newObj.cashBackTot = 0;
             document.querySelectorAll(".premiumprice")[0].innerHTML = `<br>
             You are ${obj.age} years old.<br><br>
             Your premium price is ${obj.premium} Tshs.<br>
@@ -228,7 +229,7 @@ async function fetchInfoWithFilter (data,para) {
             Guranteed sum is ${obj.sumSelected} Tshs.<br><br>
             Revisionary Bonus is ${obj.newObj.revBonus} Tshs.<br><br>
             Terminal Bonus is ${obj.newObj.termBonus} Tshs.<br><br>
-            Total Cashback is ${obj.newObj.cashBackTot} Tshs.<br><br>
+            Total Cashback is 0 Tshs.<br><br>
             Full Maturity Value is ${obj.newObj.fullMaturity} Tshs.<br><br>`
           }else{
             document.querySelectorAll(".premiumprice")[0].innerHTML = `<br>
