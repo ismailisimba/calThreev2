@@ -213,7 +213,6 @@ async function fetchInfoWithFilter (data,para) {
 
   function showPremium(obj){
       stopAnimation().then(()=>{
-        getPDF(obj); 
           if(obj.premium==="tooyoung"){
                // alert("you have to be at least 18 years old!");
                 showCustomPopUp("you have to be at least 18 years old!");
@@ -221,17 +220,12 @@ async function fetchInfoWithFilter (data,para) {
            // alert("you have to be less than 60 years old!");
             showCustomPopUp("you have to be less than 60 years old!")
           }else if(obj.planSelected==="Life Plus Plan - No Cash Backs"||obj.planSelected==="Life Plus Plan - With Cash Backs"){
-            obj.newObj.cashBackTot = 0;
-            document.querySelectorAll(".premiumprice")[0].innerHTML = `<br>
-            You are ${obj.age} years old.<br><br>
-            Your premium price is ${obj.premium} Tshs.<br>
-            Total premium collected is ${obj.newObj.premTot} Tshs.<br><br>
-            Guranteed sum is ${obj.sumSelected} Tshs.<br><br>
-            Revisionary Bonus is ${obj.newObj.revBonus} Tshs.<br><br>
-            Terminal Bonus is ${obj.newObj.termBonus} Tshs.<br><br>
-            Total Cashback is 0 Tshs.<br><br>
-            Full Maturity Value is ${obj.newObj.fullMaturity} Tshs.<br><br>`
-          }else{
+            if(obj.planSelected.includes("No Cash Backs")){
+                obj.newObj.singlecash = 0;
+                obj.newObj.cashBackTot = 0;
+            }else{
+                obj.newObj.singlecash = obj.newObj.cashBackVal;
+            }
             document.querySelectorAll(".premiumprice")[0].innerHTML = `<br>
             You are ${obj.age} years old.<br><br>
             Your premium price is ${obj.premium} Tshs.<br>
@@ -241,6 +235,32 @@ async function fetchInfoWithFilter (data,para) {
             Terminal Bonus is ${obj.newObj.termBonus} Tshs.<br><br>
             Total Cashback is ${obj.newObj.cashBackTot} Tshs.<br><br>
             Full Maturity Value is ${obj.newObj.fullMaturity} Tshs.<br><br>`
+            getPDF(obj)
+          }else if(obj.planSelected.includes("No Cash Backs")){
+            obj.newObj.cashBackTot = 0;
+            obj.newObj.singlecash = 0;
+            document.querySelectorAll(".premiumprice")[0].innerHTML = `<br>
+            You are ${obj.age} years old.<br><br>
+            Your premium price is ${obj.premium} Tshs.<br>
+            Total premium collected is ${obj.newObj.premTot} Tshs.<br><br>
+            Guranteed sum is ${obj.sumSelected} Tshs.<br><br>
+            Revisionary Bonus is ${obj.newObj.revBonus} Tshs.<br><br>
+            Terminal Bonus is ${obj.newObj.termBonus} Tshs.<br><br>
+            Total Cashback is ${obj.newObj.cashBackTot} Tshs.<br><br>
+            Full Maturity Value is ${obj.newObj.fullMaturity} Tshs.<br><br>`
+            getPDF(obj); 
+          }{
+            obj.newObj.singlecash = obj.newObj.cashBackVal;
+            document.querySelectorAll(".premiumprice")[0].innerHTML = `<br>
+            You are ${obj.age} years old.<br><br>
+            Your premium price is ${obj.premium} Tshs.<br>
+            Total premium collected is ${obj.newObj.premTot} Tshs.<br><br>
+            Guranteed sum is ${obj.sumSelected} Tshs.<br><br>
+            Revisionary Bonus is ${obj.newObj.revBonus} Tshs.<br><br>
+            Terminal Bonus is ${obj.newObj.termBonus} Tshs.<br><br>
+            Total Cashback is ${obj.newObj.cashBackTot} Tshs.<br><br>
+            Full Maturity Value is ${obj.newObj.fullMaturity} Tshs.<br><br>`
+            getPDF(obj);
           }
         
          
@@ -326,20 +346,20 @@ function addDateEventListeners(){
 async function getPDF(obj){
     startAnimation();
     const pdfObj = {};
-    console.log(typeof obj.planSelected !== 'undefined')
     pdfObj.name = obj.name;
     pdfObj.dayOfBirth = `${document.getElementById("day").value}-${document.getElementById("month").value}-${document.getElementById("year").value}`;
     pdfObj.age = obj.age;
     pdfObj.cashbackStatus = obj.newObj.cashBackVal==="cashBackVal"?"No Cashbacks":"With Cashbacks";
     pdfObj.planType = typeof obj.planSelected !== 'undefined'?obj.planSelected:" - ";
     pdfObj.policyTerm = typeof obj.termSelected !== 'undefined'?obj.termSelected:" - ";
-    pdfObj.sumInsured = typeof obj.newObj.sumAss !== 'undefined'?obj.newObj.sumAss:" - ";
-    pdfObj.premium = typeof obj.premium !== 'undefined'?obj.premium:" - ";
-    pdfObj.totalpremium = typeof obj.newObj.premTot !== 'undefined'?obj.newObj.premTot:" - ";
-    pdfObj.revbonus = typeof obj.newObj.revBonus !== 'undefined'?obj.newObj.revBonus:" - ";
-    pdfObj.termbonus = typeof obj.newObj.termBonus !== 'undefined'?obj.newObj.termBonus:" - ";
-    pdfObj.totalmatval = typeof obj.newObj.fullMaturity !== 'undefined'?obj.newObj.fullMaturity:" - ";
-    pdfObj.cashback = obj.newObj.cashBackVal==="cashBackVal"?"- ":obj.newObj.cashBackVal;
+    pdfObj.sumInsured = typeof obj.newObj.sumAss !== 'undefined'?addMyCommas(obj.newObj.sumAss):" 0 ";
+    pdfObj.premium = typeof obj.premium !== 'undefined'?addMyCommas(obj.premium):" 0 ";
+    pdfObj.totalpremium = typeof obj.newObj.premTot !== 'undefined'?addMyCommas(obj.newObj.premTot):" 0 ";
+    pdfObj.revbonus = typeof obj.newObj.revBonus !== 'undefined'?obj.newObj.revBonus:" 0 ";
+    pdfObj.termbonus = typeof obj.newObj.termBonus !== 'undefined'?obj.newObj.termBonus:" 0 ";
+    pdfObj.totalmatval = typeof obj.newObj.fullMaturity !== 'undefined'?obj.newObj.fullMaturity:" 0 ";
+    pdfObj.cashback = obj.newObj.cashBackVal==="cashBackVal"?0:obj.newObj.cashBackTot;
+    pdfObj.singlecashback = obj.newObj.cashBackVal==="cashBackVal"||obj.newObj.cashBackVal===""?0:obj.newObj.cashBackVal;
     fetchInfoWithFilter2(JSON.stringify(pdfObj),"alliancepdf").then((e)=>{
         stopAnimation();
         const file = JSON.parse(e);
@@ -402,3 +422,29 @@ async function fetchInfoWithFilter2 (data,para) {
   
       // tempDiv.innerHTML = Object.entries(localVar.values)[0][1][3] ;   
   };
+
+
+  function addMyCommas(x){
+    return x;
+  }
+
+
+  function addMyCommasN(n="1000000"){
+    n = n.toString();
+    n = reverse(n);
+    var newStr = "";
+    for(let i=n.length-1;i>=0;i--){
+      if((i+1)%3===0&&i!==n.length-1){
+        newStr = newStr+","+n[i];
+      }else{
+        newStr = newStr+n[i];
+      }
+    }
+    //newStr = reverse(newStr);
+    //console.log(newStr);
+    return newStr;
+  }
+  
+  function reverse(s){
+    return s.split("").reverse().join("");
+  }
