@@ -1,4 +1,4 @@
-const server = "https://script.google.com/macros/s/AKfycbxAb_rCj1VVL_gNLrCaP8oXIsFUL-BOGLuXvxH9WudHZ8q1p0fS-MR6gMEquaGQYmeM/exec";
+const server = "https://script.google.com/macros/s/AKfycbwx5JjVrwdTR4LpoH06sbweI2LZ7zOjQGlxgd73ArZDaaAPXnrnZ5pDxDXf3uFtMV9v/exec";
 const serverToo = "https://script.google.com/macros/s/AKfycbyiGcPBw3klm_vHQR034Mkahd6iZYVYMIVbsMzTnbXtO1Mj25itH2GBfk3i0EQ6OD8n/exec";
 const butt = document.getElementById("getPrem");
 const sumEle = document.getElementById("sum-select");
@@ -425,7 +425,7 @@ async function fetchInfoWithFilter2 (data,para) {
 
 
   function addMyCommas(x){
-    return x;
+    return x
   }
 
 
