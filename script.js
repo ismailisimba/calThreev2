@@ -213,8 +213,9 @@ async function fetchInfoWithFilter (data,para) {
 
   function showPremium(obj){
       stopAnimation().then(()=>{
-        obj.sumSelected = obj.sumSelected.toString();
-        obj.sumSelected = obj.sumSelected.length>5?addMyCommasN(obj.sumSelected):obj.sumSelected;
+        //obj.sumSelected = obj.sumSelected.toString();
+       // obj.sumSelected = obj.sumSelected.length>5?addMyCommasN(obj.sumSelected):obj.sumSelected;
+       obj.premium = numberWithCommas(obj.premium);
           if(obj.premium==="tooyoung"){
                // alert("you have to be at least 18 years old!");
                 showCustomPopUp("you have to be at least 18 years old!");
@@ -245,7 +246,7 @@ async function fetchInfoWithFilter (data,para) {
             You are ${obj.age} years old.<br><br>
             Your premium price is ${obj.premium} Tshs.<br>
             Total premium collected is ${obj.newObj.premTot} Tshs.<br><br>
-            Guranteed sum is ${obj.sumSelected.length} Tshs.<br><br>
+            Guranteed sum is ${obj.sumSelected} Tshs.<br><br>
             Revisionary Bonus is ${obj.newObj.revBonus} Tshs.<br><br>
             Terminal Bonus is ${obj.newObj.termBonus} Tshs.<br><br>
             Total Cashback is ${obj.newObj.cashBackTot} Tshs.<br><br>
@@ -354,14 +355,14 @@ async function getPDF(obj){
     pdfObj.cashbackStatus = obj.newObj.cashBackVal==="cashBackVal"?"No Cashbacks":"With Cashbacks";
     pdfObj.planType = typeof obj.planSelected !== 'undefined'?obj.planSelected:" - ";
     pdfObj.policyTerm = typeof obj.termSelected !== 'undefined'?obj.termSelected:" - ";
-    pdfObj.sumInsured = typeof obj.newObj.sumAss !== 'undefined'?addMyCommasN(obj.newObj.sumAss):" 0 ";
+    pdfObj.sumInsured = typeof obj.newObj.sumAss !== 'undefined'?obj.newObj.sumAss:" 0 ";
     pdfObj.premium = typeof obj.premium !== 'undefined'?addMyCommas(obj.premium):" 0 ";
     pdfObj.totalpremium = typeof obj.newObj.premTot !== 'undefined'?addMyCommas(obj.newObj.premTot):" 0 ";
     pdfObj.revbonus = typeof obj.newObj.revBonus !== 'undefined'?obj.newObj.revBonus:" 0 ";
     pdfObj.termbonus = typeof obj.newObj.termBonus !== 'undefined'?obj.newObj.termBonus:" 0 ";
     pdfObj.totalmatval = typeof obj.newObj.fullMaturity !== 'undefined'?obj.newObj.fullMaturity:" 0 ";
     pdfObj.cashback = obj.newObj.cashBackVal==="cashBackVal"?0:obj.newObj.cashBackTot;
-    pdfObj.singlecashback = obj.newObj.cashBackVal==="cashBackVal"||obj.newObj.cashBackVal===""?0:obj.newObj.cashBackVal;
+    pdfObj.singlecashback = obj.newObj.cashBackVal==="cashBackVal"||obj.newObj.cashBackVal===""?" 0 ":obj.newObj.cashBackVal;
     fetchInfoWithFilter2(JSON.stringify(pdfObj),"alliancepdf").then((e)=>{
         stopAnimation();
         const file = JSON.parse(e);
@@ -450,3 +451,8 @@ async function fetchInfoWithFilter2 (data,para) {
   function reverse(s){
     return s.split("").reverse().join("");
   }
+
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
