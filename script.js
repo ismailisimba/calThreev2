@@ -216,6 +216,7 @@ async function fetchInfoWithFilter (data,para) {
         //obj.sumSelected = obj.sumSelected.toString();
        // obj.sumSelected = obj.sumSelected.length>5?addMyCommasN(obj.sumSelected):obj.sumSelected;
        obj.premium = numberWithCommas(obj.premium);
+       obj.newObj.sumAss = numberWithCommas(obj.newObj.sumAss);
           if(obj.premium==="tooyoung"){
                // alert("you have to be at least 18 years old!");
                 showCustomPopUp("you have to be at least 18 years old!");
@@ -233,7 +234,7 @@ async function fetchInfoWithFilter (data,para) {
             You are ${obj.age} years old.<br><br>
             Your premium price is ${obj.premium} Tshs.<br>
             Total premium collected is ${obj.newObj.premTot} Tshs.<br><br>
-            Guranteed sum is ${obj.sumSelected} Tshs.<br><br>
+            Guranteed sum is ${obj.newObj.sumAss} Tshs.<br><br>
             Revisionary Bonus is ${obj.newObj.revBonus} Tshs.<br><br>
             Terminal Bonus is ${obj.newObj.termBonus} Tshs.<br><br>
             Total Cashback is ${obj.newObj.cashBackTot} Tshs.<br><br>
@@ -246,7 +247,7 @@ async function fetchInfoWithFilter (data,para) {
             You are ${obj.age} years old.<br><br>
             Your premium price is ${obj.premium} Tshs.<br>
             Total premium collected is ${obj.newObj.premTot} Tshs.<br><br>
-            Guranteed sum is ${obj.sumSelected} Tshs.<br><br>
+            Guranteed sum is ${obj.newObj.sumAss} Tshs.<br><br>
             Revisionary Bonus is ${obj.newObj.revBonus} Tshs.<br><br>
             Terminal Bonus is ${obj.newObj.termBonus} Tshs.<br><br>
             Total Cashback is ${obj.newObj.cashBackTot} Tshs.<br><br>
@@ -258,7 +259,7 @@ async function fetchInfoWithFilter (data,para) {
             You are ${obj.age} years old.<br><br>
             Your premium price is ${obj.premium} Tshs.<br>
             Total premium collected is ${obj.newObj.premTot} Tshs.<br><br>
-            Guranteed sum is ${obj.sumSelected} Tshs.<br><br>
+            Guranteed sum is ${obj.newObj.sumAss} Tshs.<br><br>
             Revisionary Bonus is ${obj.newObj.revBonus} Tshs.<br><br>
             Terminal Bonus is ${obj.newObj.termBonus} Tshs.<br><br>
             Total Cashback is ${obj.newObj.cashBackTot} Tshs.<br><br>
